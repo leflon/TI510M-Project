@@ -2,7 +2,8 @@
   "scripts": {
     "frontend:dev": "cd frontend && npm run dev",
     "backend:dev": "cd backend && npm run dev",
-    "dev": "concurrently \"npm run frontend:dev\" \"npm run backend:dev\" --names \"FRONTEND,BACKEND\" -c \"bgBlue.bold,bgYellow.bold\""
+    "dev": "concurrently \"npm run frontend:dev\" \"npm run backend:dev\" --names \"FRONTEND,BACKEND\" -c \"bgBlue.bold,bgYellow.bold\"",
+    "install": "npm install concurrently && cd backend && npm install && cd ../frontend && npm install"
   },
   "dependencies": {
     "concurrently": "^9.1.0"
