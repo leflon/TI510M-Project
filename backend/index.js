@@ -1,9 +1,12 @@
 import express from 'express';
 import {config} from 'dotenv';
+import cookieParser from 'cookie-parser';
 import log from './middleware/log.js';
 import Database from './lib/Database.js';
 import Logger from './lib/Logger.js';
 import publicRouter from './routes/public.js';
+import privateRouter from './routes/private.js';
+import authRouter from './routes/auth.js';
 config(); // Import env variables into process.env from the .env file.
 
 const app = express();
@@ -19,12 +22,17 @@ app.logger = new Logger('App'); // Top scope logger
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
+
 
 // Custom middleware
 app.use(log);
 
+
 // Routers
 app.use('/api/public', publicRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/private', privateRouter);
 
 // Catch all routes to return a JSON object, which is easier to deal with
 // on the frontend in case of a wrong API call.

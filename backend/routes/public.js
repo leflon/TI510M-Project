@@ -1,5 +1,4 @@
 import express from 'express';
-
 const router = express.Router();
 
 router.get('/stations/all', async (req, res) => {
@@ -20,8 +19,4 @@ router.get('/trips/:origin/:destination', async (req, res) => {
 	const trips = await req.app.db.query('SELECT * FROM Trip WHERE origin = ? AND destination = ?', [origin, destination]);
 	res.json(trips);
 });
-
-
-
-
 export default router;
