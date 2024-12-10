@@ -7,9 +7,12 @@ import Logger from './lib/Logger.js';
 import publicRouter from './routes/public.js';
 import privateRouter from './routes/private.js';
 import authRouter from './routes/auth.js';
+import cors from 'cors';
 config(); // Import env variables into process.env from the .env file.
 
 const app = express();
+
+app.use(cors());
 
 // Bind utilities to the app object so they can be accessed from the routes.
 app.db = new Database({
