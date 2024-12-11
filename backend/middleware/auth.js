@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
+import Logger from '../lib/Logger.js';
 
+const logger = new Logger('Auth');
 export default async function authMiddleware(req, res, next) {
 	const token = req.cookies.auth;
 	if (!token) {
@@ -13,6 +15,7 @@ export default async function authMiddleware(req, res, next) {
 		req.customer = customer;
 		next();
 	} catch (err) {
+		logger.error(err);
 		return res.status(401).json({error: 'Unauthorized'});
 	}
 }

@@ -2,7 +2,7 @@
 
 /* Uncomment this part to perform a full reset of the WuWu Database. */
 /* WARNING: RUNNING THE FOLLOWING INSTRUCTIONS WILL ERASE ALL DATA RELATED TO WUWU. PLEASE PROCEED CAREFULLY. */
-DROP DATABASE IF EXISTS WUWU;
+-- DROP DATABASE IF EXISTS WUWU;
 
 CREATE DATABASE IF NOT EXISTS WUWU;
 
@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS WUWU.Customer(
 	email VARCHAR(255) NOT NULL UNIQUE,
 	home_address VARCHAR(255),
 	phone VARCHAR(255),
-	password_hash VARCHAR(60) NOT NULL
+	password_hash VARCHAR(60) NOT NULL,
+	is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 
@@ -31,9 +32,9 @@ CREATE TABLE IF NOT EXISTS WUWU.Station(
 
 CREATE TABLE IF NOT EXISTS WUWU.Trip(
 	id CHAR(16) PRIMARY KEY,
-	departure_time DATE NOT NULL,
+	departure_time DATETIME NOT NULL,
 	departure_station_id CHAR(16) NOT NULL,
-	arrival_time DATE NOT NULL,
+	arrival_time DATETIME NOT NULL,
 	arrival_station_id CHAR(16) NOT NULL,
 	FOREIGN KEY (departure_station_id) REFERENCES WUWU.Station(id),
 	FOREIGN KEY (arrival_station_id) REFERENCES WUWU.Station(id)

@@ -17,7 +17,7 @@ export default class Database {
 		await this.pool.end();
 	}
 
-	static async id() {
+	static id() {
 		let id = '';
 		for (let i = 0;i < 16;i++) {
 			id += ID_ALPHABET.charAt(Math.floor(Math.random() * ID_ALPHABET.length));
@@ -34,7 +34,7 @@ export default class Database {
 		if (existingCustomer.length > 0) {
 			throw new Error('Email is already used.');
 		}
-		const id = await Database.id();
+		const id = Database.id();
 		const hashedPassword = await hash(password, SALT_ROUNDS);
 		const sql = 'INSERT INTO Customer(id, name, email, password_hash) VALUES (?, ?, ?, ?)';
 
@@ -54,7 +54,49 @@ export default class Database {
 	}
 
 	async getCustomerById(id) {
-		const [customer] = await this.query('SELECT id, name, email FROM Customer WHERE id = ?', [id]);
+		const [customer] = await this.query('SELECT id, name, email, is_admin FROM Customer WHERE id = ?', [id]);
 		return customer;
 	}
+
+	async addTrip({
+		origin,
+		destination,
+		departure,
+		arrival,
+	}) {
+		const tripId = Database.id();
+		let sql = 'INSERT INTO Trip VALUES (?, ?, ?, ?, ?)';
+		await this.query(sql, [tripId, departure, origin, arrival, destination]);
+		console.log('this [asses');
+		// Add corresponding seats
+		const seats = [];
+		/* Arbitrary values */
+		const classes = { // Number of seats per class
+			'First': 255,
+			'Second': 425
+		};
+		const seatsPerCar = 85;
+		const fares = {
+			'First': 125,
+			'Second': 80
+		};
+		let seatNumber = 0;
+		while (classes['First']-- > 0 || classes['Second']-- > 0) {
+			const id = Database.id();
+			const formattedSeatNumber = 1 + Math.floor((seatNumber % seatsPerCar) / 5) + ['A', 'B', 'C', 'D', 'E'][(seatNumber) % 5];
+			const car = Math.ceil(++seatNumber / seatsPerCar);
+			const currentClass = classes['First'] >= 0 ? 'First' : 'Second';
+			seats.push([id, car, formattedSeatNumber, currentClass, fares[currentClass]]);
+		} // For easier debugging, we create the Seats and write their SQL query separately
+		sql = 'INSERT INTO Seat VALUES ';
+		for (const seat of seats) {
+			sql += `('${seat[0]}',${seat[1]},'${seat[2]}','${seat[3]}',${seat[4]},FALSE,'${tripId}'),`; // Since all the inserted data is generated here, there is no risk of sql dump. We can proceed with escaping safely.
+		}
+		sql = sql.slice(0, -1); // Remove the trailing comma
+		console.log(sql);
+		await this.query(sql);
+		return tripId;
+	}
 }
+
+

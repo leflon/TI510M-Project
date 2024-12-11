@@ -6,6 +6,7 @@ import Database from './lib/Database.js';
 import Logger from './lib/Logger.js';
 import publicRouter from './routes/public.js';
 import privateRouter from './routes/private.js';
+import adminRouter from './routes/admin.js';
 import authRouter from './routes/auth.js';
 import cors from 'cors';
 config(); // Import env variables into process.env from the .env file.
@@ -36,6 +37,7 @@ app.use(log);
 app.use('/api/public', publicRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/private', privateRouter);
+app.use('/api/admin', adminRouter);
 
 // Catch all routes to return a JSON object, which is easier to deal with
 // on the frontend in case of a wrong API call.
