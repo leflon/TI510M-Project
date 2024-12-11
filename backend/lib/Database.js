@@ -67,7 +67,6 @@ export default class Database {
 		const tripId = Database.id();
 		let sql = 'INSERT INTO Trip VALUES (?, ?, ?, ?, ?)';
 		await this.query(sql, [tripId, departure, origin, arrival, destination]);
-		console.log('this [asses');
 		// Add corresponding seats
 		const seats = [];
 		/* Arbitrary values */
@@ -93,7 +92,6 @@ export default class Database {
 			sql += `('${seat[0]}',${seat[1]},'${seat[2]}','${seat[3]}',${seat[4]},FALSE,'${tripId}'),`; // Since all the inserted data is generated here, there is no risk of sql dump. We can proceed with escaping safely.
 		}
 		sql = sql.slice(0, -1); // Remove the trailing comma
-		console.log(sql);
 		await this.query(sql);
 		return tripId;
 	}
