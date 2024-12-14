@@ -16,7 +16,7 @@ router.get('/stations/search', async (req, res) => {
 
 router.get('/trips/:origin/:destination', async (req, res) => {
 	const {origin, destination} = req.params;
-	const trips = await req.app.db.query('SELECT * FROM Trip WHERE origin = ? AND destination = ?', [origin, destination]);
+	const trips = await req.app.db.query('SELECT * FROM Trip WHERE departure_station_id = ? AND arrival_station_id = ?', [origin, destination]);
 	res.json(trips);
 });
 export default router;
