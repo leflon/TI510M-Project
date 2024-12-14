@@ -66,9 +66,11 @@ CREATE TABLE IF NOT EXISTS WUWU.Passenger(
 
 CREATE TABLE IF NOT EXISTS WUWU.Booking(
 	id CHAR(16) PRIMARY KEY,
+	code CHAR(6) UNIQUE, -- To give the customer
 	payed BOOLEAN DEFAULT FALSE,
 	refund_status ENUM('none','requested','granted','rejected') DEFAULT 'none',
 	customer_id CHAR(16),
+	booking_email VARCHAR(255) -- to use if the customer doesn't register
 	FOREIGN KEY (customer_id) REFERENCES WUWU.Customer(id)
 );
 

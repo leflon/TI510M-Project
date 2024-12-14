@@ -60,3 +60,14 @@ html
 							input(type='datetime-local', name='arrival')
 						td
 							input(type='submit')
+			h2 Stations
+			table
+				thead
+					tr
+						th Station name
+						th Station id
+				tbody
+				each station of stations
+					tr
+						td= station.name
+						td= station.id
