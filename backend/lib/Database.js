@@ -107,9 +107,14 @@ export default class Database {
 				 WHERE t.id = ? GROUP BY t.id`;
 		const [trip] = await this.query(query, [id]);
 		const availableSeats = await this.query('SELECT class, COUNT(*) as seat_count FROM Seat WHERE trip_id = ? AND bought = 0 GROUP BY class', [id]);
+		const class_prices_raw = await this.query('SELECT class, MIN(base_price) FROM Seat WHERE trip_id = ? GROUP BY class', [id]);
 		const seatCounts = {};
+		const class_prices = {};
 		for (const seat of availableSeats) {
 			seatCounts[seat.class] = seat.seat_count;
+		}
+		for (const price of class_prices_raw) {
+			class_prices[price.class] = price['MIN(base_price)'];
 		}
 		return {
 			id: trip.id,
@@ -126,6 +131,7 @@ export default class Database {
 			departure_time: trip.departure_time,
 			arrival_time: trip.arrival_time,
 			available_seats: seatCounts,
+			class_prices,
 			lowest_price: trip.lowest_price
 		};
 	}
