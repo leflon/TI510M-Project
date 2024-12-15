@@ -95,6 +95,76 @@ export default class Database {
 		await this.query(sql);
 		return tripId;
 	}
+
+	async getTrip(id) {
+		let query = `SELECT t.*, o.name as departure_station_name, o.city as departure_station_city, 
+				 a.name as arrival_station_name, a.city as arrival_station_city,
+				 MIN(s.base_price) AS lowest_price 
+				 FROM trip t 
+				 JOIN Seat s ON t.id = s.trip_id 
+				 JOIN Station o ON t.departure_station_id = o.id
+				 JOIN Station a ON t.arrival_station_id = a.id
+				 WHERE t.id = ? GROUP BY t.id`;
+		const [trip] = await this.query(query, [id]);
+		const availableSeats = await this.query('SELECT class, COUNT(*) as seat_count FROM Seat WHERE trip_id = ? AND bought = 0 GROUP BY class', [id]);
+		const seatCounts = {};
+		for (const seat of availableSeats) {
+			seatCounts[seat.class] = seat.seat_count;
+		}
+		return {
+			id: trip.id,
+			departure_station: {
+				id: trip.departure_station_id,
+				name: trip.departure_station_name,
+				city: trip.departure_station_city
+			},
+			arrival_station: {
+				id: trip.arrival_station_id,
+				name: trip.arrival_station_name,
+				city: trip.arrival_station_city
+			},
+			departure_time: trip.departure_time,
+			arrival_time: trip.arrival_time,
+			available_seats: seatCounts,
+			lowest_price: trip.lowest_price
+		};
+	}
+
+	async getBooking({id, code}) {
+		let booking;
+		if (id)
+			[booking] = await this.query('SELECT * FROM Booking WHERE id = ?', [id]);
+		else if (code)
+			[booking] = await this.query('SELECT * FROM Booking WHERE code = ?', [code]);
+		else
+			throw new Error('No identifier provided.');
+		if (!booking)
+			throw new Error('Booking not found.');
+
+		const tickets = await this.query('SELECT * FROM Ticket WHERE booking_id = ?', [booking.id]);
+		const passengers = [];
+		const seats = [];
+		for (const ticket of tickets) {
+			console.log(ticket);
+			const passenger = await this.query('SELECT * FROM Passenger WHERE id = ?', [ticket.passenger]);
+			console.log('cc');
+			passengers.push(passenger);
+			const [seat] = await this.query('SELECT * FROM Seat WHERE id = ?', [ticket.seat_id]);
+			seats.push(seat);
+		}
+		const trip = await this.getTrip(seats[0].trip_id); // So far, all tickets in a same booking belong to the same trip
+		return {
+			id: booking.id,
+			code: booking.code,
+			email: booking.booking_email,
+			trip,
+			tickets: tickets.map((ticket, i) => ({
+				id: ticket.id,
+				passenger: passengers[i],
+				seat: seats[i]
+			}))
+		};
+	}
 }
 
 

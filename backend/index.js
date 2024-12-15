@@ -41,7 +41,6 @@ app.use('/api/auth', authRouter);
 app.use('/api/private', privateRouter);
 app.use('/api/admin', adminRouter);
 app.use('/ui', UIRouter);
-
 // Catch all routes to return a JSON object, which is easier to deal with
 // on the frontend in case of a wrong API call.
 app.all('*', (req, res) => {
