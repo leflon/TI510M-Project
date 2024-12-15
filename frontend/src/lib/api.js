@@ -8,10 +8,12 @@ const api = {
 		return response.json();
 	},
 	post: async (endpoint, body) => {
-		const response = await fetch({
-			url: import.meta.env.VITE_API_URL,
-			pathname: endpoint,
+		const url = new URL(import.meta.env.VITE_API_URL + endpoint);
+		const response = await fetch(url, {
 			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
 			body: JSON.stringify(body)
 		});
 		return response.json();

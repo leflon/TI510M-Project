@@ -3,7 +3,11 @@ import {computed} from 'vue';
 import BigButton from './BigButton.vue';
 import {ArrowUpRightIcon, ClockIcon} from '@heroicons/vue/24/outline';
 const props = defineProps({
-    trip: Object
+    trip: Object,
+    showLink: {
+        type: Boolean,
+        default: true
+    }
 });
 
 const duration = computed(() => {
@@ -61,11 +65,13 @@ function formattedDay(date) {
                 <div class='station'>{{ trip.arrival_station.name }}</div>
             </div>
         </div>
-        <div class='confirm'>
-            <BigButton>
-                <div>Book</div>
-                <ArrowUpRightIcon style="width: 16px; height: 16px;"></ArrowUpRightIcon>
-            </BigButton>
+        <div class='confirm' v-if='showLink'>
+            <RouterLink :to='`/booking_process/${trip.id}`'>
+                <BigButton>
+                    <div>Book</div>
+                    <ArrowUpRightIcon style="width: 16px; height: 16px;"></ArrowUpRightIcon>
+                </BigButton>
+            </RouterLink>
         </div>
     </div>
 </template>
@@ -138,6 +144,7 @@ function formattedDay(date) {
     z-index: 2;
     padding: 10px;
 }
+
 .trip-time svg {
     position: absolute;
     top: 40%;
@@ -148,11 +155,15 @@ function formattedDay(date) {
 .trip-time .line {
     width: 100%;
     height: 1px;
-    background: #ddd;
+    border-top: 1px dashed #ddd;
     position: absolute;
     top: 50%;
 }
+
 .confirm {
     padding: 0 10px;
+    & a {
+        text-decoration: none;
+    }
 }
 </style>

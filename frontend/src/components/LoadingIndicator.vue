@@ -1,8 +1,24 @@
+<script setup>
+import {computed} from 'vue';
+const props = defineProps({
+	size: {
+		type: Number,
+		default: 20
+	}
+});
+
+const style = computed(() => {
+	return {
+		width: `${props.size}px`,
+		height: `${props.size}px`
+	};
+});
+</script>
 <template>
 	<div class='loading-indicator'>
-		<div class="dot"></div>
-		<div class="dot"></div>
-		<div class="dot"></div>
+		<div class="dot" :style></div>
+		<div class="dot" :style></div>
+		<div class="dot" :style></div>
 	</div>
 </template>
 <style scoped>
@@ -12,9 +28,8 @@
 	align-items: center;
 	gap: 8px;
 }
+
 .dot {
-	width: 20px;
-	height: 20px;
 	border-radius: 50%;
 	background: #ddd;
 	opacity: .8;
@@ -24,6 +39,7 @@
 .dot:nth-child(2) {
 	animation-delay: 150ms;
 }
+
 .dot:last-child {
 	animation-delay: 300ms;
 }

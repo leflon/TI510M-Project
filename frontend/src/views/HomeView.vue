@@ -15,6 +15,8 @@ async function fetchTrips(origin, destination, date) {
 	isLoading.value = true;
 	api.public.get('/trips/search', {origin: origin.id, destination: destination.id})
 		.then((result) => {
+			if (result.error)
+				return;
 			trips.value = result;
 			isLoading.value = false;
 			displayResults.value = true;
@@ -27,7 +29,7 @@ async function fetchTrips(origin, destination, date) {
 <template>
 	<h1>Welcome to WuWu</h1>
 	<SearchTripBar @searchTrips='fetchTrips'></SearchTripBar>
-		<LoadingIndicator v-if='isLoading'></LoadingIndicator>
+	<LoadingIndicator v-if='isLoading'></LoadingIndicator>
 	<div class='trip-list'>
 		<TripDetails v-for='trip of trips' :trip></TripDetails>
 	</div>

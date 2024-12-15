@@ -8,6 +8,12 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    }, 
+    {
+      path: '/booking_process/:id',
+      name: 'booking',
+      component: () => import('../views/BookingProcessView.vue'),
+      props: true
     }
   ]
 })
