@@ -1,28 +1,25 @@
 <script setup>
+const props = defineProps({
+    label: String
+})
+const date = defineModel();
 </script>
 
 <template>
-
-    <span class="date-picker">
-        <p>When ?</p>
-        <input type="date" name="" id="">
-    </span>
+    <div class='date-picker'>
+        <div class='date-picker-label'>{{  label }}</div>
+        <input type='date' v-model='date' />
+    </div>
 </template>
 
-<style>
-.date-picker{
-    display: flex;
-    align-items: center;
-    font-size: 24px;
-    gap: 4px;
-    padding: 8px;
-    border-radius: 8px;
-    background-color: rgb(34, 99, 54);
+<style scoped>
+.date-picker {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
-
-input[type="date"]{
-    background-color: rgb(23, 73, 38);
-    color: rgb(194, 194, 194);
-    border: none;
+.date-picker-label {
+    font: 300 9pt 'Fira Sans';
+    color: #7e7e7e;
 }
 </style>

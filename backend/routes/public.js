@@ -26,6 +26,7 @@ router.get('/stations/search', async (req, res) => {
 
 router.get('/trips/search', async (req, res) => {
 	const {origin, destination, date} = req.query;
+	console.log(req.query);
 	let query = 'SELECT id from Trip WHERE departure_station_id = ? AND arrival_station_id = ?';
 	let params = [origin, destination];
 	if (date) {
