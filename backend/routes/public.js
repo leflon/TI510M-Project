@@ -11,7 +11,16 @@ router.get('/stations/search', async (req, res) => {
 	const {name} = req.query;
 	if (!name)
 		return res.status(400).json({error: 'Missing name query parameter.'});
-	const stations = await req.app.db.query('SELECT * FROM Station WHERE name LIKE ?', [`%${name}%`]);
+	const stations = await req.app.db.query(`
+		SELECT * FROM Station 
+		WHERE name LIKE ? 
+		ORDER BY 
+			CASE 
+				WHEN name LIKE ? THEN 1 
+				ELSE 2 
+			END, 
+			name
+	`, [`%${name}%`, `${name}%`]);
 	res.json(stations);
 });
 
