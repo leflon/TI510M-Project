@@ -23,7 +23,15 @@ router.get('/stations/search', async (req, res) => {
 	`, [`%${name}%`, `${name}%`]);
 	res.json(stations);
 });
-
+router.get('/trips/:id', async (req, res) => {
+	const {id} = req.params;
+	try {
+		const trip = await req.app.db.getTrip(id);
+		res.json(trip);
+	} catch (error) {
+		res.status(404).json({error: error.message});
+	}
+});
 router.get('/trips/search', async (req, res) => {
 	const {origin, destination, date} = req.query;
 	console.log(req.query);
