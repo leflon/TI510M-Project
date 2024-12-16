@@ -161,6 +161,8 @@ export default class Database {
 			id: booking.id,
 			code: booking.code,
 			email: booking.booking_email,
+			payed: booking.payed,
+			refund_status: booking.refund_status,
 			trip,
 			tickets: tickets.map((ticket, i) => ({
 				id: ticket.id,
