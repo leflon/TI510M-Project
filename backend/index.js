@@ -13,8 +13,12 @@ import cors from 'cors';
 config(); // Import env variables into process.env from the .env file.
 
 const app = express();
-
-app.use(cors());
+console.log(process.env.CORS_ORIGIN);
+app.use(cors({
+	origin: process.env.CORS_ORIGIN,
+	methods: ['GET', 'POST'],
+	credentials: true
+}));
 
 // Bind utilities to the app object so they can be accessed from the routes.
 app.db = new Database({

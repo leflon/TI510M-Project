@@ -33,8 +33,12 @@ router.get('/login', async (req, res) => {
 		return res.status(401).json({error: err.message});
 	}
 	const token = jwt.sign({customerId}, process.env.JWT_SECRET, {expiresIn: '30d'});
-	res.cookie('auth', token, {maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: process.env.NODE_ENV === 'production'});
-	res.status(200).json({message: 'Logged in successfully.'});
+	res.cookie('auth', token,
+		{maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: false, secure: true, sameSite: 'None', path: '/'});
+	res.status(200).header({
+		'Access-Control-Allow-Credentials': 'true',
+		'Access-Control-Allow-Origin': process.env.CORS_ORIGIN
+	}).json({message: 'Logged in successfully.'});
 });
 
 router.get('/logout', (req, res) => {
