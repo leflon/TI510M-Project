@@ -127,7 +127,7 @@ export default class Database {
 		let query = `SELECT t.*, o.name as departure_station_name, o.city as departure_station_city, 
 				 a.name as arrival_station_name, a.city as arrival_station_city,
 				 MIN(s.base_price) AS lowest_price 
-				 FROM trip t 
+				 FROM Trip t 
 				 JOIN Seat s ON t.id = s.trip_id 
 				 JOIN Station o ON t.departure_station_id = o.id
 				 JOIN Station a ON t.arrival_station_id = a.id
