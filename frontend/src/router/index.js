@@ -14,6 +14,12 @@ const router = createRouter({
       name: 'booking',
       component: () => import('../views/BookingProcessView.vue'),
       props: true
+    },
+    {
+      path: '/booking/:id',
+      name: 'View booking',
+      component: () => import('../views/BookingView.vue'),
+      props: true
     }
   ]
 })
