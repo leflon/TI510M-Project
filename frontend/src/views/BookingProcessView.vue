@@ -41,7 +41,7 @@ async function book() {
 	if (res.error) {
 		alert(res.error);
 	} else {
-		location.href = import.meta.env.VITE_API_URL + '/api/public/bookings/' + res.id; // temporary
+		location.href = import.meta.env.VITE_APP_URL + '/booking/' + res.id + '?origin=booking_process';
 	}
 }
 
@@ -116,7 +116,6 @@ const canBook = computed(() => {
 	display: flex;
 	width: 100%;
 	height: 100%;
-	padding: 0 20px;
 	flex-direction: row;
 	gap: 10px;
 }

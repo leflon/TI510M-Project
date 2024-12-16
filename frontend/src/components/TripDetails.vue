@@ -84,6 +84,7 @@ function formattedDay(date) {
     flex-direction: row;
     align-items: center;
     border: 1px solid #ddd;
+    background-color: white;
     padding: 10px 15px;
     margin: 10px 0;
     border-radius: 10px;

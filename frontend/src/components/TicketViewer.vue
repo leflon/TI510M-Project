@@ -60,6 +60,7 @@ const fullName = computed(() => {
 	flex-direction: column;
 	align-items: center;
 	border: 1px solid #ddd;
+	background-color: white;
 	border-radius: 10px;
 	width: 300px;
 	height: 400px;

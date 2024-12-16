@@ -16,6 +16,7 @@ const date = defineModel();
 .date-picker {
     padding: 10px;
     border: 1px solid #ddd;
+    background-color: white;
     border-radius: 5px;
 }
 .date-picker-label {

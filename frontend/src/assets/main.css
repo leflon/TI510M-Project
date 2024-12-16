@@ -14,12 +14,14 @@ body, html{
     width: 100%;
     height: 100%;
     font-family: 'Fira Sans'; 
+    background: var(--bg-blue);
 }
 h1,h2,h3,h4,h5,h6{
     font-family: 'Outfit';
 }
 
 #app{
+    box-sizing: border-box;
     height: 100%;
     width: 100%;
     padding: 0 20px;

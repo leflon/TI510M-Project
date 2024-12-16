@@ -4,7 +4,7 @@ const api = {
 		if (query) {
 			Object.keys(query).forEach(key => url.searchParams.append(key, query[key]));
 		}
-		const response = await fetch(url);
+		const response = await fetch(url, {credentials: 'include'});
 		return response.json();
 	},
 	post: async (endpoint, body) => {
@@ -14,7 +14,8 @@ const api = {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(body)
+			body: JSON.stringify(body),
+			credentials: 'include'
 		});
 		return response.json();
 	},
@@ -25,6 +26,22 @@ const api = {
 		},
 		post(endpoint, body) {
 			return api.post('/api/public' + endpoint, body);
+		}
+	},
+	auth: {
+		get(endpoint, query) {
+			return api.get('/api/auth' + endpoint, query);
+		},
+		post(endpoint, body) {
+			return api.post('/api/auth' + endpoint, body);
+		}
+	},
+	private: {
+		get(endpoint, query) {
+			return api.get('/api/private' + endpoint, query);
+		},
+		post(endpoint, body) {
+			return api.post('/api/private' + endpoint, body);
 		}
 	}
 };
