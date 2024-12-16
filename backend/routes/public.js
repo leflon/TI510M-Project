@@ -30,7 +30,7 @@ router.get('/trips/search', async (req, res) => {
 	let query = 'SELECT id from Trip WHERE departure_station_id = ? AND arrival_station_id = ?';
 	let params = [origin, destination];
 	if (date) {
-		query += ' AND DATE(departure_time) = DATE(?)';
+		query += ' AND DATE(departure_time) = ?';
 		params.push(date);
 	}
 	query += ' ORDER BY departure_time';

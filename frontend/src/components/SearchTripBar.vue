@@ -3,7 +3,7 @@ import {ref} from 'vue';
 import DatePicker from "../components/DatePicker.vue";
 import StationPicker from "../components/StationPicker.vue";
 import BigButton from './BigButton.vue';
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
+import {MagnifyingGlassIcon} from '@heroicons/vue/24/solid';
 
 const emit = defineEmits(['searchTrips']);
 
@@ -12,6 +12,8 @@ const destination = ref();
 const date = ref();
 
 const onclick = () => {
+    if (!origin.value || !destination.value || !date.value)
+        return;
     emit('searchTrips', origin.value, destination.value, date.value);
 }
 
@@ -19,8 +21,8 @@ const onclick = () => {
 
 <template>
     <div class="search-trip-bar">
-        <StationPicker type='departure' v-model='origin'></StationPicker>    
-        <StationPicker type='arrival' v-model='destination'></StationPicker>    
+        <StationPicker type='departure' v-model='origin'></StationPicker>
+        <StationPicker type='arrival' v-model='destination'></StationPicker>
         <DatePicker v-model='date' label='Departure Date'></DatePicker>
         <BigButton @click='onclick'>
             <MagnifyingGlassIcon style="width: 24px; height: 24px;"></MagnifyingGlassIcon>
@@ -36,10 +38,10 @@ const onclick = () => {
     align-items: center;
     gap: 5px;
     height: 58px;
-    & > :not(button) {
+
+    &> :not(button) {
         box-sizing: border-box;
         height: 100%;
     }
 }
 </style>
-
