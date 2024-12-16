@@ -33,6 +33,7 @@ router.get('/trips/search', async (req, res) => {
 		query += ' AND DATE(departure_time) = DATE(?)';
 		params.push(date);
 	}
+	query += ' ORDER BY departure_time';
 	const tripIDs = await req.app.db.query(query, params);
 	const trips = [];
 	for (const {id} of tripIDs) {
