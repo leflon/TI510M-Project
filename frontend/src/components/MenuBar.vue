@@ -38,6 +38,7 @@ import MenuCustomer from './MenuCustomer.vue';
 	display: flex;
 	gap: 10px;
 }
+
 a {
 	text-decoration: none;
 	color: black;

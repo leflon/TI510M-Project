@@ -39,18 +39,28 @@ export default class Database {
 		const sql = 'INSERT INTO Customer(id, name, email, password_hash) VALUES (?, ?, ?, ?)';
 
 		await this.query(sql, [id, name, email, hashedPassword]);
-		return id;
+		return {
+			id,
+			name,
+			email,
+			is_admin: false
+		};
 	}
 
 	async attemptLogin(email, password) {
-		const [customer] = await this.query('SELECT id, password_hash FROM Customer WHERE email = ?', [email]);
+		const [customer] = await this.query('SELECT * FROM Customer WHERE email = ?', [email]);
 		if (!customer) {
 			throw new Error('Invalid email or password.');
 		}
 		if (!await compare(password, customer.password_hash)) {
 			throw new Error('Invalid email or password.');
 		}
-		return customer.id;
+		return {
+			id: customer.id,
+			name: customer.name,
+			email: customer.email,
+			is_admin: customer.is_admin
+		};
 	}
 
 	async getCustomerById(id) {

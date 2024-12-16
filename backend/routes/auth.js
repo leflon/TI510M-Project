@@ -14,8 +14,8 @@ router.post('/signup', (req, res) => {
 	if (!passwordRegex.test(password)) return res.status(400).json({error: 'Invalid password'});
 	if (!emailRegex.test(email)) return res.status(400).json({error: 'Invalid email'});
 	// Add customer to database
-	req.app.db.addCustomer({name, password, email}).then(id => {
-		res.status(201).json({id});
+	req.app.db.addCustomer({name, password, email}).then(customer => {
+		res.status(201).json({customer});
 	}).catch((err) => {
 		res.status(500).json({error: err.message});
 	});
@@ -25,20 +25,20 @@ router.get('/login', async (req, res) => {
 	const {email, password} = req.query;
 	// Controller
 	if (!email || !password) return res.status(400).json({error: 'Missing required information'});
-	let customerId;
+	let customer;
 	try {
-		customerId = await req.app.db.attemptLogin(email, password);
+		customer = await req.app.db.attemptLogin(email, password);
 	} catch (err) {
 		res.clearCookie('auth');
 		return res.status(401).json({error: err.message});
 	}
-	const token = jwt.sign({customerId}, process.env.JWT_SECRET, {expiresIn: '30d'});
+	const token = jwt.sign({customerId: customer.id}, process.env.JWT_SECRET, {expiresIn: '30d'});
 	res.cookie('auth', token,
 		{maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: false, secure: true, sameSite: 'None', path: '/'});
 	res.status(200).header({
 		'Access-Control-Allow-Credentials': 'true',
 		'Access-Control-Allow-Origin': process.env.CORS_ORIGIN
-	}).json({message: 'Logged in successfully.'});
+	}).json({customer});
 });
 
 router.get('/logout', (req, res) => {

@@ -4,6 +4,7 @@ import {ref, computed} from 'vue';
 import StyledInput from './StyledInput.vue';
 import BigButton from './BigButton.vue';
 import api from '../lib/api';
+import {store} from '../lib/store';
 const mode = ref('login');
 const error = ref('');
 const loginValues = ref({
@@ -18,7 +19,7 @@ const registerValues = ref({
 	confirmPassword: ''
 });
 
-const emit = defineEmits(['logged', 'registered']);
+const emit = defineEmits(['finished']);
 
 function login() {
 	api.auth.get('/login', loginValues.value)
@@ -27,16 +28,32 @@ function login() {
 				error.value = res.error;
 			} else {
 				error.value = '';
-				alert(JSON.stringify(res));
-				emit('logged', res);
+				store.customer = res.customer;
+				emit('finished', 'login');
 			}
 		});
 }
 function register() {
-	console.log(registerValues.value);
-}
-function test() {
-	api.private.get('/test').then(console.log);
+	if (registerValues.value.password !== registerValues.value.confirmPassword) {
+		error.value = 'Passwords do not match';
+		return;
+	}
+	error.value = '';
+	const body = {
+		name: registerValues.value.firstName + ' ' + registerValues.value.lastName,
+		email: registerValues.value.email,
+		password: registerValues.value.password,
+	};
+	api.auth.post('/signup', body)
+		.then((res) => {
+			if (res.error) {
+				error.value = res.error;
+			} else {
+				error.value = '';
+				store.customer = res.customer;
+				emit('finished', 'register');
+			}
+		});
 }
 </script>
 <template>
@@ -63,7 +80,6 @@ function test() {
 			<BigButton @click='register'>Register</BigButton>
 
 		</div>
-		<button @click='test'>test</button>
 	</div>
 </template>
 
@@ -75,7 +91,7 @@ function test() {
 
 .login-form {
 	position: relative;
-	z-index: 1000;
+	z-index: 99999;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
