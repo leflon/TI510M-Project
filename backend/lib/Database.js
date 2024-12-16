@@ -151,9 +151,7 @@ export default class Database {
 		const passengers = [];
 		const seats = [];
 		for (const ticket of tickets) {
-			console.log(ticket);
-			const passenger = await this.query('SELECT * FROM Passenger WHERE id = ?', [ticket.passenger]);
-			console.log('cc');
+			const [passenger] = await this.query('SELECT * FROM Passenger WHERE id = ?', [ticket.passenger]);
 			passengers.push(passenger);
 			const [seat] = await this.query('SELECT * FROM Seat WHERE id = ?', [ticket.seat_id]);
 			seats.push(seat);
