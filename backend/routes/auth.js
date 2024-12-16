@@ -15,7 +15,13 @@ router.post('/signup', (req, res) => {
 	if (!emailRegex.test(email)) return res.status(400).json({error: 'Invalid email'});
 	// Add customer to database
 	req.app.db.addCustomer({name, password, email}).then(customer => {
-		res.status(201).json({customer});
+		const token = jwt.sign({customerId: customer.id}, process.env.JWT_SECRET, {expiresIn: '30d'});
+		res.cookie('auth', token,
+			{maxAge: 1000 * 60 * 60 * 24 * 30, httpOnly: false, secure: true, sameSite: 'None', path: '/'});
+		res.status(201).header({
+			'Access-Control-Allow-Credentials': 'true',
+			'Access-Control-Allow-Origin': process.env.CORS_ORIGIN
+		}).json({customer});
 	}).catch((err) => {
 		res.status(500).json({error: err.message});
 	});
