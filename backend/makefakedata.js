@@ -31,12 +31,12 @@ const distance = (start, end) => {
 
 for (const start of stations) {
 	for (const end of stations) {
-		console.log(`Trips from ${start.name} to ${end.name}`);
 		if (start.id === end.id || start.city === end.city) continue;
+		console.log(`Trips from ${start.name} to ${end.name}`);
 		const startLocation = {lat: start.location.x, lon: start.location.y};
 		const endLocation = {lat: end.location.x, lon: end.location.y};
 		const tripDistance = distance(startLocation, endLocation);
-		const averageSpeed = 100; // km/h
+		const averageSpeed = 250; // km/h
 		const travelTime = tripDistance / averageSpeed; // hours
 		const DAY_COUNT = 1;
 		for (let i = 0;i < DAY_COUNT;i++) {
@@ -58,7 +58,7 @@ for (const start of stations) {
 					departure_time: departureTime,
 					arrival_time: arrivalTime
 				};
-				db.addTrip({
+				await db.addTrip({
 					origin: trip.departure_station_id,
 					destination: trip.arrival_station_id,
 					departure: trip.departure_time,
@@ -72,3 +72,4 @@ for (const start of stations) {
 		}
 	}
 }
+db.pool.end();
