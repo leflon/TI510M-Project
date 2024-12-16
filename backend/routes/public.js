@@ -62,6 +62,23 @@ router.get('/bookings/:id', async (req, res) => {
 	}
 });
 
+router.get('/bookings/code/:code', async (req, res) => {
+	const {code} = req.params;
+	const {email} = req.query;
+	if (!email)
+		return res.status(400).json({error: 'Missing email query parameter.'});
+	try {
+		const booking = await req.app.db.getBooking({code});
+		if (!booking)
+			return res.status(404).json({error: 'Booking not found.'});
+		if (booking.email !== email)
+			return res.status(403).json({error: 'Email does not match booking.'});
+		res.json(booking);
+	} catch (error) {
+		res.status(404).json({error: error.message});
+	}
+});
+
 router.post('/book/:tripId', async (req, res) => {
 	const {tripId} = req.params;
 	const {passengers, email} = req.body;
