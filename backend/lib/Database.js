@@ -73,6 +73,8 @@ export default class Database {
 		destination,
 		departure,
 		arrival,
+		randomizeSeats = false,
+		includeStanding = false
 	}) {
 		const tripId = Database.id();
 		let sql = 'INSERT INTO Trip VALUES (?, ?, ?, ?, ?)';
@@ -80,14 +82,29 @@ export default class Database {
 		// Add corresponding seats
 		const seats = [];
 		/* Arbitrary values */
-		const classes = { // Number of seats per class
-			'First': 255,
-			'Second': 425
-		};
+		let classes;
+		if (randomizeSeats) {
+			classes = {
+				'First': Math.floor(Math.random() * 256),
+				'Second': Math.floor(Math.random() * 425)
+			};
+			if (includeStanding) {
+				classes['Standing'] = Math.floor(Math.random() * 200);
+			}
+		}
+		else {
+			classes = {
+				'First': 256,
+				'Second': 425
+			};
+			if (includeStanding) {
+				classes['Standing'] = 200;
+			}
+		}
 		const seatsPerCar = 85;
 		const fares = {
-			'First': 125,
-			'Second': 80
+			'First': Math.floor(Math.random() * (200 - 80 + 1)) + 80,
+			'Second': Math.floor(Math.random() * (80 - 40 + 1)) + 40
 		};
 		let seatNumber = 0;
 		while (classes['First']-- > 0 || classes['Second']-- > 0) {
@@ -116,6 +133,8 @@ export default class Database {
 				 JOIN Station a ON t.arrival_station_id = a.id
 				 WHERE t.id = ? GROUP BY t.id`;
 		const [trip] = await this.query(query, [id]);
+		if (!trip)
+			throw new Error('Trip not found.');
 		const availableSeats = await this.query('SELECT class, COUNT(*) as seat_count FROM Seat WHERE trip_id = ? AND bought = 0 GROUP BY class', [id]);
 		const class_prices_raw = await this.query('SELECT class, MIN(base_price) FROM Seat WHERE trip_id = ? GROUP BY class', [id]);
 		const seatCounts = {};

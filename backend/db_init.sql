@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS WUWU.Booking(
 	payed BOOLEAN DEFAULT FALSE,
 	refund_status ENUM('none','requested','granted','rejected') DEFAULT 'none',
 	customer_id CHAR(16),
-	booking_email VARCHAR(255) -- to use if the customer doesn't register
+	booking_email VARCHAR(255), -- to use if the customer doesn't register
 	FOREIGN KEY (customer_id) REFERENCES WUWU.Customer(id)
 );
 

@@ -27,7 +27,6 @@ router.get('/stations/search', async (req, res) => {
 
 router.get('/trips/search', async (req, res) => {
 	const {origin, destination, date} = req.query;
-	console.log(req.query);
 	let query = 'SELECT id from Trip WHERE departure_station_id = ? AND arrival_station_id = ?';
 	let params = [origin, destination];
 	if (date) {
@@ -119,7 +118,6 @@ router.post('/book/:tripId', async (req, res) => {
 	for (let i = 0;i < seats.length;i++) {
 		const ticketId = Database.id();
 		// TODO: Compute price based on passenger age (if we have time)
-		console.log([ticketId, passengerIDs[i], seats[i].id, seats[i].price, bookingId]);
 		await req.app.db.query('INSERT INTO Ticket VALUES (?, ?, ?, ?, ?)', [ticketId, passengerIDs[i], seats[i].id, seats[i].base_price, bookingId]);
 		tickets.push(ticketId);
 	}

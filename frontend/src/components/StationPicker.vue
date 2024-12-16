@@ -13,7 +13,6 @@ const fetchStations = async () => {
     const stations = await api.public.get('/stations/search', {name: inputVal.value}) || [];
     proposedStations.value = stations.slice(0, 10);
     focused.value = true;
-    console.log(stations);
 }
 
 const selectStation = (station) => {

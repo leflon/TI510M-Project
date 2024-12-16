@@ -11,7 +11,6 @@ const trips = ref([]);
 
 
 async function fetchTrips(origin, destination, date) {
-	console.log(origin, destination, date);
 	isLoading.value = true;
 	api.public.get('/trips/search', {origin: origin.id, destination: destination.id})
 		.then((result) => {
@@ -20,7 +19,6 @@ async function fetchTrips(origin, destination, date) {
 			trips.value = result;
 			isLoading.value = false;
 			displayResults.value = true;
-			console.log(result);
 		});
 }
 

@@ -13,7 +13,6 @@ import cors from 'cors';
 config(); // Import env variables into process.env from the .env file.
 
 const app = express();
-console.log(process.env.CORS_ORIGIN);
 app.use(cors({
 	origin: process.env.CORS_ORIGIN,
 	methods: ['GET', 'POST'],

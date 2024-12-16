@@ -23,18 +23,14 @@ function addPassenger() {
 	passengers.value.push({});
 }
 function deletePassenger(i) {
-	console.log(passengers.value.map(p => p.first_name));
 	passengers.value = passengers.value.filter((_, index) => index !== i);
-	console.log(passengers.value.map(p => p.first_name));
 }
 function updatePassenger(i, data) {
-	console.log(data);
 	passengers.value[i] = data.value;
 }
 
 async function book() {
 	if (!email.value || !canBook) return;
-	console.log(email.value, passengers.value);
 	isBookingLoading.value = true;
 	const res = await api.public.post(`/book/${props.id}`, {passengers: passengers.value, email: email.value});
 	isBookingLoading.value = false;
