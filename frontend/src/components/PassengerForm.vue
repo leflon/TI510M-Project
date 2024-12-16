@@ -86,6 +86,7 @@ function deletePassenger() {
 	border: 1px solid #ddd;
 	padding: 20px;
 	border-radius: 10px;
+	background-color: white;
 }
 
 .passenger-form .form-label {

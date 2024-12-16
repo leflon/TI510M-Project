@@ -31,7 +31,6 @@ const onclick = () => {
 
 <style scoped>
 .search-trip-bar {
-    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;

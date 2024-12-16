@@ -148,6 +148,7 @@ const canBook = computed(() => {
 	border-radius: 10px;
 	cursor: pointer;
 	transition: background .3s ease;
+	background: white;
 
 	&:hover {
 		background: #eee7;
@@ -156,6 +157,7 @@ const canBook = computed(() => {
 
 .summary {
 	border: 1px solid #ddd;
+	background: white;
 	border-radius: 10px;
 }
 

@@ -17,8 +17,10 @@ const registerValues = ref({
 	password: '',
 	confirmPassword: ''
 });
+
+const emit = defineEmits(['logged', 'registered']);
+
 function login() {
-	console.log(loginValues.value);
 	api.auth.get('/login', loginValues.value)
 		.then((res) => {
 			if (res.error) {
@@ -26,6 +28,7 @@ function login() {
 			} else {
 				error.value = '';
 				alert(JSON.stringify(res));
+				emit('logged', res);
 			}
 		});
 }
@@ -71,6 +74,8 @@ function test() {
 }
 
 .login-form {
+	position: relative;
+	z-index: 1000;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

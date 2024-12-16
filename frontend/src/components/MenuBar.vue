@@ -1,3 +1,6 @@
+<script setup>
+import MenuCustomer from './MenuCustomer.vue';
+</script>
 <template>
 	<div class='menu-bar'>
 		<div class="logo">WuWu</div>
@@ -8,15 +11,14 @@
 			<router-link to='/my'>My Bookings</router-link>
 		</div>
 		<div class='user'>
-			Login
+			<MenuCustomer ></MenuCustomer>
 		</div>
 	</div>
 </template>
 
 <style scoped>
 .menu-bar {
-	position: sticky;
-	top: 10px;
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
