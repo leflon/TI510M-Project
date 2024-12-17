@@ -7,7 +7,7 @@ import TripDetails from '../components/TripDetails.vue';
 
 const isLoading = ref(false);
 const displayResults = ref(false);
-const trips = ref([]);
+const trips = ref(null);
 
 
 async function fetchTrips(origin, destination, date) {
@@ -33,7 +33,11 @@ async function fetchTrips(origin, destination, date) {
 	</div>
 	<div class='trip-list'>
 		<LoadingIndicator v-if='isLoading'></LoadingIndicator>
-		<TripDetails v-else v-for='trip of trips' :trip></TripDetails>
+		<TripDetails v-else-if='trips?.length' v-for='trip of trips' :trip></TripDetails>
+		<div v-else-if='trips !== null' class='no-trip'>
+			No trips found. 😢
+		</div>
+
 	</div>
 </template>
 
@@ -48,6 +52,10 @@ async function fetchTrips(origin, destination, date) {
 	margin: 10px auto;
 }
 
+.no-trip {
+	margin: 10px auto;
+	font: 800 20pt 'Outfit';
+}
 .catchphrase {
 	color: white;
 	font: 800 30pt 'Outfit';

@@ -25,6 +25,8 @@ async function findBooking() {
 
 async function getMyBookings() {
 	isLoadingMyBookings.value = true;
+	// If this is recalled because of a logout/login, reset the bookings so that another user doen't see the previous user's bookings
+	listedBookings.value = [];
 	api.private.get('/my-bookings')
 		.then(res => {
 			isLoadingMyBookings.value = false;
