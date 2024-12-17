@@ -1,6 +1,6 @@
 <script setup>
 import {store} from '../lib/store';
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import StyledInput from '../components/StyledInput.vue';
 import BigButton from '../components/BigButton.vue';
 import api from '../lib/api';
@@ -36,6 +36,7 @@ async function getMyBookings() {
 			}
 		});
 }
+watch(store.customer, getMyBookings, {deep: true});
 onMounted(getMyBookings);
 </script>
 
