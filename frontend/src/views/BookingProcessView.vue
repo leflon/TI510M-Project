@@ -133,7 +133,6 @@ h1 {
 .booking-process {
 	display: flex;
 	width: 100%;
-	height: 100%;
 	flex-direction: row;
 	gap: 10px;
 	flex-wrap: wrap;
