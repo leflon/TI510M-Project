@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS WUWU.Ticket(
 	seat_id CHAR(16) NOT NULL,
 	price FLOAT NOT NULL,
 	booking_id CHAR(16) NOT NULL,
+	FOREIGN KEY (passenger) REFERENCES WUWU.Passenger(id),
 	FOREIGN KEY (seat_id) REFERENCES WUWU.Seat(id),
 	FOREIGN KEY (booking_id) REFERENCES WUWU.Booking(id)
 );
