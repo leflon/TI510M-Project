@@ -12,7 +12,6 @@ const trips = ref(null);
 
 async function fetchTrips(origin, destination, date) {
 	isLoading.value = true;
-	console.log(date);
 	api.public.get('/trips/search', {origin: origin.id, destination: destination.id, date: date})
 		.then((result) => {
 			if (result.error)

@@ -12,7 +12,6 @@ export default function authMiddleware(blocking) {
 		}
 		try {
 			const {customerId} = jwt.verify(token, process.env.JWT_SECRET);
-			console.log(customerId);
 			const customer = await req.app.db.getCustomerById(customerId);
 			if (!customer && blocking)
 				return res.status(401).json({error: 'Unauthorized'});

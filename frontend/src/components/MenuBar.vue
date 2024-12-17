@@ -15,7 +15,6 @@ onMounted(() => {
 	menuBarBottom.value = menuBar.value.getBoundingClientRect().y + menuBar.value.getBoundingClientRect().height;
 });
 const popUpStyle = computed(() => {
-	console.log(menuBarRight.value);
 	return {
 		top: menuBarBottom.value + 10 + 'px',
 		right: menuBarRight.value + 'px'

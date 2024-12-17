@@ -36,7 +36,6 @@ async function getMyBookings() {
 			} else {
 				myBookingsError.value = null;
 				listedBookings.value = res;
-				console.log(res);
 			}
 		});
 }
