@@ -13,7 +13,7 @@ router.get('/me', (req, res) => {
 });
 
 router.get('/my-bookings', async (req, res) => {
-	const bookingIds = await req.app.db.query('SELECT id FROM Booking WHERE customer_id = ?', [req.customer.id]);
+	const bookingIds = await req.app.db.query('SELECT b.id FROM Booking b JOIN Trip t ON t.id = b.trip_id WHERE customer_id = ? ORDER BY t.departure_date', [req.customer.id]);
 	const bookings = [];
 	for (const {id} of bookingIds) {
 		bookings.push(await req.app.db.getBooking({id}));

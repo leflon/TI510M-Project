@@ -5,9 +5,10 @@ const logger = new Logger('Auth');
 export default function authMiddleware(blocking) {
 	return async function authMiddleware(req, res, next) {
 		const token = req.cookies.auth;
-		console.log(token);
 		if (!token) {
-			return res.status(401).json({error: 'Unauthorized'});
+			if (blocking)
+				return res.status(401).json({error: 'Unauthorized'});
+			else return next();
 		}
 		try {
 			const {customerId} = jwt.verify(token, process.env.JWT_SECRET);

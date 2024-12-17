@@ -19,6 +19,8 @@ const registerValues = ref({
 	confirmPassword: ''
 });
 
+const props = defineProps({class: String});
+
 const emit = defineEmits(['finished']);
 
 function login() {
@@ -55,9 +57,10 @@ function register() {
 			}
 		});
 }
+const className = computed(() => 'login-form ' + props.class);
 </script>
 <template>
-	<div class="login-form">
+	<div :class='className'>
 		<div class="mode-selector">
 			<div class="mode" :class="{ selected: mode === 'login' }" @click="mode = 'login'">Login</div>
 			<div class="mode" :class="{ selected: mode === 'register' }" @click="mode = 'register'">Register</div>
