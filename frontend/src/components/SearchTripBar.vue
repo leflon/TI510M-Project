@@ -9,7 +9,8 @@ const emit = defineEmits(['searchTrips']);
 
 const origin = ref();
 const destination = ref();
-const date = ref();
+const date = ref(new Date().toISOString().split('T')[0]);
+
 
 const onclick = () => {
     if (!origin.value || !destination.value || !date.value)

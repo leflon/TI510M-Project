@@ -17,7 +17,7 @@ async function fetchTrips(origin, destination, date) {
 		.then((result) => {
 			if (result.error)
 				return;
-			trips.value = result;
+			trips.value = result.filter(trip => new Date(trip.departure_time) > new Date());
 			isLoading.value = false;
 			displayResults.value = true;
 		});
