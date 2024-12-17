@@ -9,6 +9,7 @@ import TripDetails from '../components/TripDetails.vue';
 const email = ref();
 const code = ref();
 const findError = ref(null);
+const myBookingsError = ref(null);
 const listedBookings = ref([]);
 const isLoadingMyBookings = ref(false);
 
@@ -31,8 +32,9 @@ async function getMyBookings() {
 		.then(res => {
 			isLoadingMyBookings.value = false;
 			if (res.error) {
-				findError.value = res.error;
+				myBookingsError.value = res.error;
 			} else {
+				myBookingsError.value = null;
 				listedBookings.value = res;
 				console.log(res);
 			}
@@ -46,9 +48,11 @@ onMounted(getMyBookings);
 	<h1>See your bookings</h1>
 	<div class='my-bookings' v-if='store.customer'>
 		<LoadingIndicator v-if='isLoadingMyBookings'></LoadingIndicator>
+		<div v-if='myBookingsError' class='error'>{{ myBookingsError }}</div>
 		<TripDetails v-for='booking in listedBookings' :key='booking.id' :trip='booking.trip' :showLink='false'
 			:showLinkToBooking='true' :bookingId='booking.id'>
 		</TripDetails>
+
 	</div>
 	<div v-if='store.customer'>
 		<div class='sep'></div>
