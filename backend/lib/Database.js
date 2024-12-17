@@ -193,6 +193,7 @@ export default class Database {
 			payed: booking.payed,
 			refund_status: booking.refund_status,
 			trip,
+			customer_id: booking.customer_id,
 			tickets: tickets.map((ticket, i) => ({
 				id: ticket.id,
 				passenger: passengers[i],

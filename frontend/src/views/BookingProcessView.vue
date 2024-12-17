@@ -100,7 +100,7 @@ const canBook = computed(() => {
 			<div class='final-island island'>
 				<h4>Contact information</h4>
 				<div class='inputs'>
-					<StyledInput v-model='email' type='text' label='Email' :disabled='store.customer !== undefined'>
+					<StyledInput v-model='email' type='text' label='Email' :disabled='store.customer !== null'>
 					</StyledInput>
 					<div :class='{ "book-button": true, disabled: !canBook }'>
 						<BigButton class='book-button' @click='book'>

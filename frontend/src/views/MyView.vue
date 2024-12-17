@@ -121,7 +121,9 @@ h1 {
 	font: 800 14pt 'Outfit';
 	width: max-content;
 	margin: 10px auto;
-	&:before, &:after {
+
+	&:before,
+	&:after {
 		content: '';
 		position: absolute;
 		width: 50px;
@@ -129,9 +131,11 @@ h1 {
 		background-color: #fff;
 		top: 50%;
 	}
+
 	&:before {
 		right: calc(100% + 10px);
 	}
+
 	&:after {
 		left: calc(100% + 10px);
 	}

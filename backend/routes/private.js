@@ -22,4 +22,14 @@ router.get('/my-bookings', async (req, res) => {
 	res.json(bookings);
 });
 
+router.post('/save-booking/:bookingId', async (req, res) => {
+	const booking = await req.app.db.getBooking({id: req.params.bookingId});
+	if (!booking || booking.customer_id) {
+		res.status(400).json({error: 'Invalid booking ID'});
+		return;
+	}
+	await req.app.db.query('UPDATE Booking SET customer_id = ? WHERE id = ?', [req.customer.id, booking.id]);
+	res.json({message: 'Booking saved status updated', success: true});
+});
+
 export default router;

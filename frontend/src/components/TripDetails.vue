@@ -30,7 +30,6 @@ function formattedTime(date) {
     const minutes = String(dateObj.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
 }
-
 function formattedDay(date) {
     const dateObj = new Date(date);
     const options = {weekday: 'short', month: 'short', day: 'numeric'};
@@ -42,7 +41,9 @@ function formattedDay(date) {
 
     return formattedDate;
 }
-
+const arrivesNextDay = computed(() => {
+    return new Date(props.trip.arrival_time).getDate() !== new Date(props.trip.departure_time).getDate();
+});
 </script>
 
 <template>
@@ -63,8 +64,14 @@ function formattedDay(date) {
             </div>
             <div class='trip-stop arrival'>
                 <div class='timing'>
-                    <div class='day'>{{ formattedDay(trip.arrival_time) }}</div>
-                    <div class="time">{{ formattedTime(trip.arrival_time) }}</div>
+                    <div class='day'>
+                        {{ formattedDay(trip.arrival_time) }}</div>
+                    <div class="time">
+                        <span>
+                            <div class='next-day' v-if='arrivesNextDay'>+1</div>
+                            {{ formattedTime(trip.arrival_time) }}
+                        </span>
+                    </div>
                 </div>
                 <div class='city'>{{ trip.arrival_station.city }}</div>
                 <div class='station'>{{ trip.arrival_station.name }}</div>
@@ -79,7 +86,7 @@ function formattedDay(date) {
             </RouterLink>
         </div>
         <div class='confirm' v-else-if='showLinkToBooking'>
-            <RouterLink :to='`/booking/${bookingId}`'>
+            <RouterLink :to='`/booking/${bookingId}?origin=my`'>
                 <BigButton>
                     <div>View</div>
                     <ArrowUpRightIcon style="width: 16px; height: 16px;"></ArrowUpRightIcon>
@@ -131,7 +138,23 @@ function formattedDay(date) {
 }
 
 .trip-stop .time {
+    position: relative;
     font: 700 30pt 'Outfit';
+    left: 0;
+
+    & span {
+        position: relative;
+        display: inline-block;
+    }
+
+    & .next-day {
+        position: absolute;
+        left: -15px;
+        top: 10px;
+        font-size: 12pt;
+        font: 600 11pt 'Fira Sans';
+        color: #ff8000;
+    }
 }
 
 .trip-stop .city {
