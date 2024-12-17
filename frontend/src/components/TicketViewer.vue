@@ -67,7 +67,10 @@ const fullName = computed(() => {
 	text-align: center;
 	padding: 10px;
 }
-
+.big-qr-close svg {
+	width: 40px;
+	fill: white;
+}
 .big-qr-container {
 	position: fixed;
 	top: 0;
@@ -110,6 +113,10 @@ const fullName = computed(() => {
 		&[value='First'] {
 			color: rgb(255, 206, 12);
 			font-weight: 500;
+		}
+		& svg {
+			width: 16px;
+			height: 16px;
 		}
 	}
 }

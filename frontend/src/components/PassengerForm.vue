@@ -63,6 +63,12 @@ function deletePassenger() {
 </template>
 
 <style scoped>
+svg {
+	width: 24px;
+	height: 24px;
+	/* workaround for Firefox */
+}
+
 .passenger-form {
 	width: 100%;
 }
@@ -114,6 +120,7 @@ function deletePassenger() {
 	gap: 20px;
 	cursor: pointer;
 	transition: background .1s ease, border-color .1s ease;
+
 	&[selected=true] {
 		border-color: var(--secondary);
 		background: var(--secondary-10);

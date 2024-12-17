@@ -22,6 +22,12 @@ const emit = defineEmits(['click']);
 </template>
 
 <style scoped>
+svg {
+	width: 24px;
+	height: 24px;
+	/* Firefox workaround */
+}
+
 .customer-icon {
 	position: relative;
 	z-index: 100000;

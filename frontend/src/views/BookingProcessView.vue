@@ -195,10 +195,21 @@ h1 {
 	padding: 5px 10px;
 	border-bottom: 1px solid #ddd;
 }
-
+.passenger-summary-left {
+	flex: 1;
+}
 .passenger-summary-name {
 	display: flex;
 	align-items: center;
+	flex: 1;
+	& span {
+		flex: 1;
+	}
+	& svg {
+		width: 16px;
+		height: 16px;
+		/* Firefox... */
+	}
 }
 
 .passenger-summary-sep {
