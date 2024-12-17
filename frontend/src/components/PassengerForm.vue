@@ -32,7 +32,7 @@ function deletePassenger() {
 </script>
 
 <template>
-	<div class='passenger-form'>
+	<div class='passenger-form island'>
 		<div v-if='canDelete' class='close-button' @click='deletePassenger'>
 			<XMarkIcon :style='{ width: 24, height: 24 }'></XMarkIcon>
 		</div>
@@ -63,6 +63,10 @@ function deletePassenger() {
 </template>
 
 <style scoped>
+.passenger-form {
+	width: 100%;
+}
+
 .close-button {
 	display: flex;
 	width: 34px;
@@ -79,14 +83,6 @@ function deletePassenger() {
 	&:hover {
 		background: #ddd8;
 	}
-}
-
-.passenger-form {
-	position: relative;
-	border: 1px solid #ddd;
-	padding: 20px;
-	border-radius: 10px;
-	background-color: white;
 }
 
 .passenger-form .form-label {

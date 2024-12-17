@@ -26,21 +26,52 @@ async function fetchTrips(origin, destination, date) {
 </script>
 
 <template>
-	<h1>Welcome to WuWu</h1>
-	<SearchTripBar @searchTrips='fetchTrips'></SearchTripBar>
-	<LoadingIndicator v-if='isLoading'></LoadingIndicator>
+	<div class="catchphrase">Book a trip to <span class="paradise">paradise</span></div>
+
+	<div class="search-container">
+		<SearchTripBar @searchTrips='fetchTrips'></SearchTripBar>
+	</div>
 	<div class='trip-list'>
-		<TripDetails v-for='trip of trips' :trip></TripDetails>
+		<LoadingIndicator v-if='isLoading'></LoadingIndicator>
+		<TripDetails v-else v-for='trip of trips' :trip></TripDetails>
 	</div>
 </template>
 
 
 
-<style>
+<style scoped>
 .trip-list {
 	width: 80%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin: 10px auto;
+}
+
+.catchphrase {
+	color: white;
+	font: 800 30pt 'Outfit';
+	text-align: center;
+	margin: 40px 0;
+}
+
+.paradise {
+	background: linear-gradient(45deg, rgba(255, 251, 175, 1) 0%, rgba(255, 151, 0, 1) 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.search-container {
+	position: sticky;
+	top: 20px;
+	z-index: 10;
+	padding: 20px 60px;
+	background: white;
+	width: max-content;
+	border-radius: 10em;
+	border: 1px solid #ddd;
+	box-shadow: 0 10px 10px #0001;
+	margin: 0 auto;
 }
 </style>

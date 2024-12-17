@@ -1,11 +1,13 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import authMiddleware from '../middleware/auth.js';
 const router = express.Router();
 
 const nameRegex = /^.{1,255}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,24}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+router.use(authMiddleware(false));
 router.post('/signup', (req, res) => {
 	const {name, password, email} = req.body;
 	// Controller

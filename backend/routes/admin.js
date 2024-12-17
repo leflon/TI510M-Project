@@ -2,7 +2,7 @@ import express from 'express';
 import authMiddleware from '../middleware/auth.js';
 const router = express.Router();
 
-router.use(authMiddleware);
+router.use(authMiddleware(true));
 router.use((req, res, next) => {
 	if (req.customer?.is_admin === 'false')
 		return res.status(403).json({error: 'Forbidden'});

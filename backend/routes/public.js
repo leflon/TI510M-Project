@@ -1,7 +1,9 @@
 import express from 'express';
 import Database from '../lib/Database.js';
+import authMiddleware from '../middleware/auth.js';
 const router = express.Router();
 
+router.use(authMiddleware(false));
 router.get('/stations/all', async (req, res) => {
 	const stations = await req.app.db.query('SELECT * FROM Station');
 	res.json(stations);
@@ -78,7 +80,6 @@ router.get('/bookings/code/:code', async (req, res) => {
 		res.status(404).json({error: error.message});
 	}
 });
-
 router.post('/book/:tripId', async (req, res) => {
 	const {tripId} = req.params;
 	const {passengers, email} = req.body;
@@ -113,7 +114,10 @@ router.post('/book/:tripId', async (req, res) => {
 	// Save the booking
 	const bookingId = Database.id();
 	const bookingCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-	await req.app.db.query('INSERT INTO Booking (id,code,booking_email) VALUES (?,?,?)', [bookingId, bookingCode, email]); // To improve later.
+	if (req.customer)
+		await req.app.db.query('INSERT INTO Booking (id,code,booking_email,customer_id) VALUES (?,?,?,?)', [bookingId, bookingCode, email, req.customer.id]);
+	else
+		await req.app.db.query('INSERT INTO Booking (id,code,booking_email) VALUES (?,?,?)', [bookingId, bookingCode, email]);
 	// Issue the tickets
 	const tickets = [];
 	for (let i = 0;i < seats.length;i++) {

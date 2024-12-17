@@ -59,6 +59,9 @@ onMounted(async () => {
 	border-left: 10px solid rgb(43, 195, 43);
 	width: 80%;
 	margin: 10px auto;
+	& h1 {
+		color: black;
+	}
 }
 
 .ticket-list {

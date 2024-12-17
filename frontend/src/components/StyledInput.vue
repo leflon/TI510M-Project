@@ -8,19 +8,24 @@ const props = defineProps({
 	type: {
 		type: String,
 		default: 'text'
-	}
+	},
+	disabled: {
+		type: Boolean,
+		default: false
+	},
 });
 
 const emit = defineEmits(['update:modelValue']);
 const isFocused = ref(false);
 const model = defineModel();
 
-const className = computed(() => model.value ? 'input-container filled' : 'input-container');
+const className = computed(() => (model.value ? 'input-container filled' : 'input-container') + (props.disabled ? ' disabled' : ''));
 </script>
 
 <template>
 	<div :class='className'>
-		<input :type="type" v-model="model" class="input-field" @focus="isFocused = true" @blur="isFocused = false" />
+		<input :type="type" v-model="model" class="input-field" @focus="isFocused = true" @blur="isFocused = false"
+			:disabled='props.disabled' />
 		<label class="input-label">{{ label }}</label>
 		<div class='bottom-line'></div>
 		<div class='bottom-line focused'></div>
@@ -32,6 +37,10 @@ const className = computed(() => model.value ? 'input-container filled' : 'input
 	position: relative;
 	display: inline-block;
 	margin: 20px 0;
+
+	&.disabled, &.disabled * {
+		cursor: not-allowed;
+	}
 }
 
 .input-label {

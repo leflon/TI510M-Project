@@ -7,7 +7,12 @@ const props = defineProps({
     showLink: {
         type: Boolean,
         default: true
-    }
+    },
+    showLinkToBooking: {
+        type: Boolean,
+        default: false
+    },
+    bookingId: String
 });
 
 const duration = computed(() => {
@@ -69,6 +74,14 @@ function formattedDay(date) {
             <RouterLink :to='`/booking_process/${trip.id}`'>
                 <BigButton>
                     <div>Book</div>
+                    <ArrowUpRightIcon style="width: 16px; height: 16px;"></ArrowUpRightIcon>
+                </BigButton>
+            </RouterLink>
+        </div>
+        <div class='confirm' v-else-if='showLinkToBooking'>
+            <RouterLink :to='`/booking/${bookingId}`'>
+                <BigButton>
+                    <div>View booking</div>
                     <ArrowUpRightIcon style="width: 16px; height: 16px;"></ArrowUpRightIcon>
                 </BigButton>
             </RouterLink>
@@ -163,6 +176,7 @@ function formattedDay(date) {
 
 .confirm {
     padding: 0 10px;
+
     & a {
         text-decoration: none;
     }

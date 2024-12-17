@@ -26,7 +26,8 @@ import MenuCustomer from './MenuCustomer.vue';
 	backdrop-filter: blur(10px);
 	background-color: #fff5;
 	width: 80%;
-	margin: 10px auto;
+	margin: 0 auto;
+	margin-bottom: 20px;
 	border-radius: 10em;
 	box-shadow: 0 10px 10px rgba(6, 6, 6, 0.156);
 }

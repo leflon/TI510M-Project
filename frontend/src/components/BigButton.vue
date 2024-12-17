@@ -29,7 +29,7 @@ button {
 	padding: 10px;
 	cursor: pointer;
 	border: none;
-	background: var(--main-blue);
+	background: var(--secondary);
 	border-radius: 5px;
 	color: #fff;
 	font: 600 16pt 'Outfit';

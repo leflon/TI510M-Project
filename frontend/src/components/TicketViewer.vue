@@ -141,6 +141,7 @@ img {
 
 	& .catchphrase {
 		font: 300 8pt 'Fira Sans';
+		color: black;
 	}
 
 	& .logo {

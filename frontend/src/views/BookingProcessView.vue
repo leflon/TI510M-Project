@@ -2,6 +2,7 @@
 import {onMounted, ref, computed} from 'vue';
 import LoadingIndicator from '../components/LoadingIndicator.vue';
 import api from '../lib/api';
+import {store} from '../lib/store';
 import TripDetails from '../components/TripDetails.vue';
 import PassengerForm from '../components/PassengerForm.vue';
 import {UserIcon} from '@heroicons/vue/24/solid';
@@ -14,7 +15,7 @@ const isLoading = ref(true);
 const isBookingLoading = ref(false);
 const trip = ref(null);
 const passengers = ref([{}]);
-const email = ref();
+const email = ref(store.customer?.email);
 onMounted(async () => {
 	trip.value = await api.public.get(`/trips/${props.id}`);
 	isLoading.value = false;
@@ -49,7 +50,7 @@ const canBook = computed(() => {
 <template>
 	<div v-if='!isLoading && trip' class='booking-process'>
 		<div class='left'>
-			<h2>Book this trip to {{ trip.arrival_station.city }}</h2>
+			<h1>Book this trip to <b>{{ trip.arrival_station.city }}</b></h1>
 			<TripDetails :trip :showLink='false'></TripDetails>
 			<div class='passenger-forms'>
 				<PassengerForm :trip v-for='[k, v] in Object.entries(passengers)' :canDelete='parseInt(k) !== 0'
@@ -61,8 +62,9 @@ const canBook = computed(() => {
 			</div>
 		</div>
 		<div class='right'>
+			<h1>Order summary</h1>
 			<div class="summary" v-if='passengers'>
-				<div class='summary-title'>Summary</div>
+				<div class='summary-title'>Price summary</div>
 				<div v-for="(passenger, index) in passengers" :key="index" class="passenger-summary">
 					<div :style='{ display: "contents" }'>
 						<div class='passenger-summary-left'>
@@ -95,19 +97,30 @@ const canBook = computed(() => {
 					</span>
 				</div>
 			</div>
-			<StyledInput v-model='email' type='text' label='Email'></StyledInput>
-			<BigButton class='book-button' v-if='canBook' @click='book'>
-				<div v-if='!isBookingLoading'>
-					<span>Book</span>
-					<ArrowRightIcon style='width: 16px; height: 16px'></ArrowRightIcon>
+			<div class='final-island island'>
+				<h4>Contact information</h4>
+				<div class='inputs'>
+					<StyledInput v-model='email' type='text' label='Email' :disabled='store.customer !== undefined'>
+					</StyledInput>
+					<div :class='{ "book-button": true, disabled: !canBook }'>
+						<BigButton class='book-button' @click='book'>
+							<div v-if='!isBookingLoading'>
+								<span>Book</span>
+								<ArrowRightIcon style='width: 16px; height: 16px'></ArrowRightIcon>
+							</div>
+							<LoadingIndicator :size='10' v-else></LoadingIndicator>
+						</BigButton>
+					</div>
 				</div>
-				<LoadingIndicator :size='10' v-else></LoadingIndicator>
-			</BigButton>
+			</div>
 		</div>
 	</div>
 	<LoadingIndicator v-else></LoadingIndicator>
 </template>
 <style scoped>
+h1 {
+	font-weight: 500;
+}
 .booking-process {
 	display: flex;
 	width: 100%;
@@ -133,7 +146,9 @@ const canBook = computed(() => {
 	flex-direction: column;
 	gap: 10px;
 }
-
+.trip-details {
+	width: 100%;
+}
 .add-passenger {
 	border: 1px solid #ddd;
 	margin: 5px auto;
@@ -196,8 +211,22 @@ const canBook = computed(() => {
 	flex-direction: column;
 }
 
-.book-button {
+.book-button.disabled {
+	filter: grayscale(1);
+	pointer-events: none;
+	transition: filter .3s ease;
+}
+
+.final-island {
+	padding: 10px 20px;
 	margin: 10px 0;
-	align-self: flex-end;
+	& h4 {
+		margin: 5px 0;
+	}
+	& .inputs {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 }
 </style>
