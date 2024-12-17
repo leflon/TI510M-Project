@@ -34,15 +34,19 @@ const onclick = () => {
 
 <style scoped>
 .search-trip-bar {
+    position: relative;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     gap: 5px;
-    height: 58px;
+    min-height: 58px;
+    max-width: 100%;
 
     &> :not(button) {
         box-sizing: border-box;
         height: 100%;
     }
 }
+
 </style>

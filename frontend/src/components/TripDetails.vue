@@ -108,6 +108,9 @@ const arrivesNextDay = computed(() => {
     padding: 10px 15px;
     margin: 10px 0;
     border-radius: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-width: 300px;
 }
 
 .trip-info {
@@ -202,6 +205,11 @@ const arrivesNextDay = computed(() => {
 
     & a {
         text-decoration: none;
+    }
+}
+@media screen and (max-width: 610px) {
+    .trip-time {
+        display: none;
     }
 }
 </style>

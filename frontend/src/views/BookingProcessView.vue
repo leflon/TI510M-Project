@@ -136,18 +136,27 @@ h1 {
 	height: 100%;
 	flex-direction: row;
 	gap: 10px;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 
 .left {
 	padding: 20px;
 	width: 60%;
-	height: 100%;
+}
+@media screen and (max-width: 800px) {
+	.left {
+		width: 100%;
+		padding: 0 5px;
+	}
+	.right {
+		padding: 0;
+	}
 }
 
 .right {
 	padding: 20px;
-	width: 40%;
-	height: 100%;
+	flex: 1;
 }
 
 .passenger-forms {

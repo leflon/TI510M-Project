@@ -63,6 +63,13 @@ async function logout() {
 	z-index: 100000;
 }
 
+@media screen and (max-width: 400px) {
+	.menu-form, .logout-popup {
+		left: 50% !important;
+		transform: translateX(-50%);
+	}
+}
+
 .menu-bar {
 	position: relative;
 	display: flex;
@@ -84,11 +91,22 @@ async function logout() {
 
 .center-links {
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
 	gap: 10px;
 }
 
 a {
 	text-decoration: none;
 	color: black;
+	text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+	.menu-bar {
+		width: 100%;
+		border-radius: 10px;
+	}
 }
 </style>

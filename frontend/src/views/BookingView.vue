@@ -65,7 +65,7 @@ async function saveBooking() {
 </template>
 <style scoped>
 .booking-view {
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
 	display: flex;
 	align-items: center;
@@ -76,6 +76,7 @@ async function saveBooking() {
 	display: flex;
 	gap: 20px;
 	align-items: center;
+	flex-wrap: wrap;
 	padding: 20px;
 	background: rgb(142, 255, 142);
 	border-left: 10px solid rgb(43, 195, 43);
@@ -88,7 +89,13 @@ async function saveBooking() {
 }
 
 .ticket-list {
+	width: 100%;
 	display: flex;
 	gap: 30px;
+	overflow: scroll;
+	padding: 5px;
+	& > * {
+		margin: 0 auto;
+	}
 }
 </style>

@@ -75,11 +75,19 @@ async function fetchTrips(origin, destination, date) {
 	top: 20px;
 	z-index: 10;
 	padding: 20px 60px;
+	max-width: 100%;
 	background: white;
 	width: max-content;
 	border-radius: 10em;
 	border: 1px solid #ddd;
 	box-shadow: 0 10px 10px #0001;
 	margin: 0 auto;
+}
+
+@media screen and (max-width: 800px) {
+    .search-container {
+        border-radius: 10px;
+        position: relative;
+    }
 }
 </style>
