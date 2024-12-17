@@ -81,7 +81,7 @@ function formattedDay(date) {
         <div class='confirm' v-else-if='showLinkToBooking'>
             <RouterLink :to='`/booking/${bookingId}`'>
                 <BigButton>
-                    <div>View booking</div>
+                    <div>View</div>
                     <ArrowUpRightIcon style="width: 16px; height: 16px;"></ArrowUpRightIcon>
                 </BigButton>
             </RouterLink>

@@ -60,6 +60,7 @@ async function logout() {
 	justify-content: center;
 	align-items: center;
 	padding: 10px;
+	z-index: 100000;
 }
 
 .menu-bar {
