@@ -45,6 +45,9 @@ async function book() {
 const canBook = computed(() => {
 	return passengers.value.every(p => p.first_name && p.last_name && p.age && p.preferred_class);
 });
+const totalPrice = computed(() => {
+	return passengers.value.reduce((acc, p) => acc += trip.value.class_prices[p.preferred_class] || 0, passengers.value.length * 15);
+});
 
 </script>
 <template>
@@ -88,13 +91,19 @@ const canBook = computed(() => {
 					</div>
 					<div class='passenger-summary-right'>¥{{ passengers.length * 15 }}</div>
 				</div>
+				<div class="passenger-summary">
+					<span style='font-weight: 500'>Subtotal</span>
+					<span>
+						¥{{ totalPrice }}
+					</span>
+				</div>
+				<div class="fake-coupon passenger-summary">
+					<span class='grad-text'>Insane Welcome Coupon (100% off)</span>
+					<span>-¥{{  totalPrice}}</span>
+				</div>
 				<div class="total-price">
 					<span>Total</span>
-					<span>
-						¥{{ passengers.reduce((acc, p) => acc += trip.class_prices[p.preferred_class] || 0,
-							passengers.length * 15)
-						}}
-					</span>
+					<span>¥0</span>
 				</div>
 			</div>
 			<div class='final-island island'>
@@ -170,6 +179,7 @@ h1 {
 	border: 1px solid #ddd;
 	background: white;
 	border-radius: 10px;
+	overflow: hidden;
 }
 
 .summary .summary-title {
@@ -204,6 +214,7 @@ h1 {
 	justify-content: space-between;
 	padding: 5px 10px;
 	font: 600 12pt 'Outfit';
+	background-color: #efefef;
 }
 
 .right {
@@ -228,5 +239,8 @@ h1 {
 		justify-content: space-between;
 		align-items: center;
 	}
+}
+.fake-coupon span:first-child {
+	font: 500 12pt 'Outfit';
 }
 </style>
