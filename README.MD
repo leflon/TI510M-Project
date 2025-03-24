@@ -1,5 +1,7 @@
 # WuWu • Train booking website
 [Try it out!](https://wuwu.leflon.fr)
+
+![Cover Image](https://github.com/leflon/TI510M-Project/blob/mattelothere-readme-tweak/images/cover.png)
 ## Book a trip to paradise
 Advanced Web Programming Project by **Mattéo Launay** & **Paul Leflon**
 ## Introduction
