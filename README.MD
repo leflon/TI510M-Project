@@ -1,5 +1,7 @@
 # WuWu • Train booking website
 [Try it out!](https://wuwu.leflon.fr)
+
+![Landing Page](https://github.com/leflon/images/cover.png)
 ## Book a trip to paradise
 Advanced Web Programming Project by **Mattéo Launay** & **Paul Leflon**
 ## Introduction
